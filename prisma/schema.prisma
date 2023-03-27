@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      =  "file:./dev.db"
+}
+
+
+model form{
+  id  Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String
+  description String @default("")
+  questions question[]
+  postedBy user? @relation(fields: [postedById],references: [id])
+  postedById Int?
+}
+
+model user{
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  img String @default("")
+  password String
+  forms form[]
+}
+
+model question{
+  id Int @id @default(autoincrement())
+  questionText String
+  required Boolean @default(false)
+  options option[]
+  containedBy form? @relation(fields: [containedById],references: [id])
+  containedById Int?
+}
+
+model option{
+  id Int @id @default(autoincrement())
+  optionText String
+  containedBy question? @relation(fields: [containedByquestionId],references: [id])
+  containedByquestionId Int?
+}
