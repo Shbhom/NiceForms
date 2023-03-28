@@ -24,8 +24,8 @@ model form{
 model user{
   id Int @id @default(autoincrement())
   name String
-  email String
-  img String @default("")
+  email String @unique
+  // img String @default("")
   password String
   forms form[]
 }

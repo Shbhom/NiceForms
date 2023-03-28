@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  token: String!
+  user: user!
+}
+
 type Form {
   description: String
   id: Int!
@@ -10,8 +15,18 @@ type Form {
   question: [question!]!
 }
 
+type Mutation {
+  deleteUser(id: Int!): user!
+  getAllUsers: [user!]!
+  login(email: String!, password: String!): AuthPayload!
+  post(description: String, name: String!): Form!
+  signup(email: String!, name: String!, password: String!): AuthPayload!
+  updateUser(email: String, id: Int!, name: String): user!
+  updateUserId(newId: Int!, oldId: Int!): user!
+}
+
 type Query {
-  ok: Boolean!
+  getForms: [Form!]!
 }
 
 type option {
@@ -30,6 +45,5 @@ type user {
   email: String!
   forms: [Form!]
   id: Int!
-  img: String!
   name: String!
 }

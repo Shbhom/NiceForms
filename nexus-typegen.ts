@@ -28,11 +28,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['user']; // user!
+  }
   Form: { // root type
     description?: string | null; // String
     id: number; // Int!
     name: string; // String!
   }
+  Mutation: {};
   Query: {};
   option: { // root type
     optionText?: string | null; // String
@@ -45,7 +50,6 @@ export interface NexusGenObjects {
   user: { // root type
     email: string; // String!
     id: number; // Int!
-    img: string; // String!
     name: string; // String!
   }
 }
@@ -61,6 +65,10 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['user']; // user!
+  }
   Form: { // field return type
     description: string | null; // String
     id: number; // Int!
@@ -68,8 +76,17 @@ export interface NexusGenFieldTypes {
     postedBy: NexusGenRootTypes['user']; // user!
     question: NexusGenRootTypes['question'][]; // [question!]!
   }
+  Mutation: { // field return type
+    deleteUser: NexusGenRootTypes['user']; // user!
+    getAllUsers: NexusGenRootTypes['user'][]; // [user!]!
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    post: NexusGenRootTypes['Form']; // Form!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    updateUser: NexusGenRootTypes['user']; // user!
+    updateUserId: NexusGenRootTypes['user']; // user!
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    getForms: NexusGenRootTypes['Form'][]; // [Form!]!
   }
   option: { // field return type
     optionText: string | null; // String
@@ -85,12 +102,15 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     forms: NexusGenRootTypes['Form'][] | null; // [Form!]
     id: number; // Int!
-    img: string; // String!
     name: string; // String!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthPayload: { // field return type name
+    token: 'String'
+    user: 'user'
+  }
   Form: { // field return type name
     description: 'String'
     id: 'Int'
@@ -98,8 +118,17 @@ export interface NexusGenFieldTypeNames {
     postedBy: 'user'
     question: 'question'
   }
+  Mutation: { // field return type name
+    deleteUser: 'user'
+    getAllUsers: 'user'
+    login: 'AuthPayload'
+    post: 'Form'
+    signup: 'AuthPayload'
+    updateUser: 'user'
+    updateUserId: 'user'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    getForms: 'Form'
   }
   option: { // field return type name
     optionText: 'String'
@@ -115,12 +144,38 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     forms: 'Form'
     id: 'Int'
-    img: 'String'
     name: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    deleteUser: { // args
+      id: number; // Int!
+    }
+    login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
+    post: { // args
+      description?: string | null; // String
+      name: string; // String!
+    }
+    signup: { // args
+      email: string; // String!
+      name: string; // String!
+      password: string; // String!
+    }
+    updateUser: { // args
+      email?: string | null; // String
+      id: number; // Int!
+      name?: string | null; // String
+    }
+    updateUserId: { // args
+      newId: number; // Int!
+      oldId: number; // Int!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
